@@ -1,0 +1,7 @@
+Cadastro de Disciplinas
+Cadastro de Professores
+Cadastro de Salas
+Criação de Turmas
+Geração Automática de Grades
+Gerenciamento de Conflitos
+Geração de comprovante de Solicitação de Matrícula

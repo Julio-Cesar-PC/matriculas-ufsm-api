@@ -1,0 +1,25 @@
+{
+  "name": "matriculas-ufsm-api",
+  "version": "1.0.0",
+  "description": "## Cadastro de Disciplinas - Nome da disciplina, código, ementa, carga horária, pré-requisitos, professor responsável, semestre",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@feathersjs/feathers": "^5.0.31",
+    "@feathersjs/koa": "^5.0.31",
+    "@feathersjs/socketio": "^5.0.31",
+    "feathers-sequelize": "^7.0.3",
+    "mysql2": "^3.11.4",
+    "sequelize": "^6.37.5"
+  }
+}
