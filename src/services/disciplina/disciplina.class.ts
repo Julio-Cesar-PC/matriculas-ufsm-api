@@ -16,7 +16,14 @@ export class DisciplinaService<ServiceParams extends Params = DisciplinaParams> 
   DisciplinaData,
   DisciplinaParams,
   DisciplinaPatch
-> {}
+> {
+  constructor(options: KnexAdapterOptions) {
+    super({
+      ...options,
+      id: 'codigo_disciplina'
+    })
+  }
+}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {
   return {

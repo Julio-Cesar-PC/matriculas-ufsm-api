@@ -16,7 +16,14 @@ export class ProfessorService<ServiceParams extends Params = ProfessorParams> ex
   ProfessorData,
   ProfessorParams,
   ProfessorPatch
-> {}
+> {
+  constructor(options: KnexAdapterOptions) {
+    super({
+      ...options,
+      id: 'Matricula'
+    })
+  }
+}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {
   return {

@@ -1,5 +1,5 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.class.html#database-services
-import type { Params } from '@feathersjs/feathers'
+import type { Id, Params } from '@feathersjs/feathers'
 import { KnexService } from '@feathersjs/knex'
 import type { KnexAdapterParams, KnexAdapterOptions } from '@feathersjs/knex'
 
@@ -16,7 +16,11 @@ export class SalaService<ServiceParams extends Params = SalaParams> extends Knex
   SalaData,
   SalaParams,
   SalaPatch
-> {}
+> {
+  constructor(options: KnexAdapterOptions) {
+    super(options)
+  }
+}
 
 export const getOptions = (app: Application): KnexAdapterOptions => {
   return {
