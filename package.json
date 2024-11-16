@@ -2,7 +2,7 @@
   "name": "matriculas-ufsm-api",
   "version": "1.0.0",
   "description": "api para o sistema de matrículas do trabalho de pgbd",
-  "main": "index.ts",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
