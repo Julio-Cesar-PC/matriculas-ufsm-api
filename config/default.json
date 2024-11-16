@@ -10,7 +10,12 @@
     "max": 50
   },
   "mysql": {
-    "client": "mysql",
-    "connection": "jdbc:mysql://localhost:3306/matriculas"
+    "client": "mysql2",
+    "connection": {
+      "host": "localhost",
+      "user": "feather",
+      "password": "strong_password",
+      "database": "matriculas"
+    }
   }
 }

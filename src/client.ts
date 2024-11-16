@@ -4,6 +4,39 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
+import { turmaAlunoClient } from './services/turma-aluno/turma-aluno.shared'
+export type {
+  TurmaAluno,
+  TurmaAlunoData,
+  TurmaAlunoQuery,
+  TurmaAlunoPatch
+} from './services/turma-aluno/turma-aluno.shared'
+
+import { turmaClient } from './services/turma/turma.shared'
+export type { Turma, TurmaData, TurmaQuery, TurmaPatch } from './services/turma/turma.shared'
+
+import { alunoClient } from './services/aluno/aluno.shared'
+export type { Aluno, AlunoData, AlunoQuery, AlunoPatch } from './services/aluno/aluno.shared'
+
+import { professorClient } from './services/professor/professor.shared'
+export type {
+  Professor,
+  ProfessorData,
+  ProfessorQuery,
+  ProfessorPatch
+} from './services/professor/professor.shared'
+
+import { cursoClient } from './services/curso/curso.shared'
+export type { Curso, CursoData, CursoQuery, CursoPatch } from './services/curso/curso.shared'
+
+import { disciplinaClient } from './services/disciplina/disciplina.shared'
+export type {
+  Disciplina,
+  DisciplinaData,
+  DisciplinaQuery,
+  DisciplinaPatch
+} from './services/disciplina/disciplina.shared'
+
 import { centroClient } from './services/centro/centro.shared'
 export type { Centro, CentroData, CentroQuery, CentroPatch } from './services/centro/centro.shared'
 
@@ -38,5 +71,11 @@ export const createClient = <Configuration = any,>(
 
   client.configure(salaClient)
   client.configure(centroClient)
+  client.configure(disciplinaClient)
+  client.configure(cursoClient)
+  client.configure(professorClient)
+  client.configure(alunoClient)
+  client.configure(turmaClient)
+  client.configure(turmaAlunoClient)
   return client
 }

@@ -7,7 +7,9 @@
   "keywords": [
     "feathers"
   ],
-  "author": {},
+  "author": {
+    "name": "Bruna"
+  },
   "contributors": [],
   "bugs": {},
   "engines": {
@@ -60,6 +62,8 @@
     "@feathersjs/typebox": "^5.0.31",
     "knex": "^3.1.0",
     "mysql": "^2.18.1",
+    "mysql2": "^3.11.4",
+    "pg": "^8.13.1",
     "winston": "^3.17.0"
   },
   "devDependencies": {
