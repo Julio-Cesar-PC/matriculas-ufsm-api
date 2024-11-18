@@ -50,6 +50,35 @@ class SalaController {
             res.status(400).send('Centro não encontrado!');
         });
     }
+
+    put(req, res) {
+        const {centro, numero, capacidade, tipo} = req.body;
+        let obj = {
+            centro: centro,
+            numero: numero,
+            capacidade_alunos: capacidade,
+            tipo: tipo
+        };
+
+        database('Sala').where('numero', numero).andWhere('centro', centro).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Sala não encontrada!');
+            } else {
+                database.select().from('Centro').where('codigo_centro', centro).then((exist) => {
+                    if (exist.length === 0) {
+                        res.status(400).send('Centro não encontrado!');
+                    } else {
+                        database('Sala').where('numero', numero).andWhere('centro', centro).update(obj).then(() => {
+                            res.send('Sala atualizado com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao atualizar sala!');
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = new SalaController();

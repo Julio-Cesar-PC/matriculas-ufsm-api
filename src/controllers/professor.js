@@ -42,6 +42,34 @@ class ProfessorController {
             res.status(400).send('Centro não encontrado!');
         });
     }
+
+    put(req, res) {
+        const {Matricula, nome, centro} = req.body;
+        let obj = {
+            Matricula: Matricula,
+            nome: nome,
+            centro: centro
+        };
+
+        database('Professor').where('Matricula', Matricula).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Professor não encontrado!');
+            } else {
+                database.select().from('Centro').where('codigo_centro', centro).then((exist) => {
+                    if (exist.length === 0) {
+                        res.status(400).send('Centro não encontrado!');
+                    } else {
+                        database('Professor').where('Matricula', Matricula).update(obj).then(() => {
+                            res.send('Professor atualizado com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao atualizar professor!');
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = new ProfessorController();

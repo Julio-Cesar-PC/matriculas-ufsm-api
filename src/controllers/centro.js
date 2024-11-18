@@ -28,6 +28,26 @@ class CentroController {
             res.status(500).send('Erro ao cadastrar centro!');
         });
     }
+
+    put(req, res) {
+        const {original, novo} = req.body;
+        let obj = {
+            codigo_centro: novo
+        };
+
+        database('Centro').where('codigo_centro',original).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Centro não encontrado!');
+            } else {
+                database('Centro').where('codigo_centro', original).update(obj).then(() => {
+                    res.send('Centro atualizado com sucesso!');
+                }).catch((err) => {
+                    console.log(err);
+                    res.status(500).send('Erro ao atualizar centro!');
+                });
+            }
+        });
+    }
 }
 
 module.exports = new CentroController();

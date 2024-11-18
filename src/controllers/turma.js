@@ -90,6 +90,74 @@ class TurmaController {
             res.status(400).send('Erro ao buscar disciplina!');
         });
     }
+
+    put(req, res) {
+        const {
+            ano,
+            semestre,
+            vagas,
+            data_inicio,
+            data_fim,
+            disciplina,
+            professor,
+            Centro,
+            numero_Sala,
+            dia_semana,
+            horario_inicio,
+            horario_fim
+        } = req.body;
+        let obj = {
+            ano: ano,
+            semestre_turma: semestre,
+            N_vagas: vagas,
+            data_inicio: data_inicio,
+            data_fim: data_fim,
+            codigo_disciplina: disciplina,
+            Matricula_Professor: professor,
+            Centro_Sala: Centro,
+            Numero_Sala: numero_Sala,
+            dia_semana: dia_semana,
+            hora_inicio: horario_inicio,
+            hora_fim: horario_fim
+        };
+
+        database('Turma').where('ano', ano).andWhere('semestre_turma', semestre).andWhere('codigo_disciplina', disciplina).andWhere('Matricula_Professor', professor).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Turma não encontrada!');
+            } else {
+                database.select().from('Disciplina').where('codigo_disciplina', disciplina).then((data) => {
+                    if (data.length === 0) {
+                        res.status(400).send('Disciplina não encontrada!');
+                    } else {
+                        database.select().from('Professor').where('Matricula', professor).then((data2) => {
+                            if (data2.length === 0) {
+                                res.status(400).send('Professor não encontrado!');
+                            } else {
+                                database.select().from('Sala').where('numero', numero_Sala).where('centro', Centro).then((data3) => {
+                                    if (data3.length === 0) {
+                                        res.status(400).send('Sala não encontrada!');
+                                    } else {
+                                        database('Turma').where('ano', ano).andWhere('semestre_turma', semestre).andWhere('codigo_disciplina', disciplina).andWhere('Matricula_Professor', professor).update(obj).then(() => {
+                                            res.send('Turma atualizada com sucesso!');
+                                        }).catch((err) => {
+                                            console.log(err);
+                                            res.status(500).send('Erro ao atualizar turma!');
+                                        });
+                                    }
+                                }).catch((err) => {
+                                    console.log(err);
+                                    res.status(500).send('Erro ao buscar sala!');
+                                });
+                            }
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(400).send('Erro ao buscar professor!');
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = new TurmaController();

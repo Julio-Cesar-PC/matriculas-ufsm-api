@@ -43,6 +43,37 @@ class AlunoController {
             res.status(400).send('Curso não encontrado!');
         });
     }
+
+    put(req, res) {
+        const {matricula, nome, curso} = req.body;
+        let obj = {
+            matricula: matricula,
+            nome: nome,
+            id_curso: curso
+        };
+
+        database('Aluno').where('matricula', matricula).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Aluno não encontrado!');
+            } else {
+                database.select().from('Curso').where('id', curso).then((exist) => {
+                    if (exist.length === 0) {
+                        res.status(400).send('Curso não encontrado!');
+                    } else {
+                        database('Aluno').where('matricula', matricula).update(obj).then(() => {
+                            res.send('Aluno atualizado com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao atualizar aluno!');
+                        });
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                    res.status(400).send('Curso não encontrado!');
+                });
+            }
+        });
+    }
 }
 
 module.exports = new AlunoController();
