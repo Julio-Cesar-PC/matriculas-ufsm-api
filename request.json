@@ -1,0 +1,1210 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-11-18T13:03:00.025Z",
+  "__export_source": "insomnia.desktop.app:v10.0.0",
+  "resources": [
+    {
+      "_id": "req_ca36c50b30f04d2f93a53b882b398eb3",
+      "parentId": "fld_378fdb3b7b32489e87c00efada7d4a7d",
+      "modified": 1731879508228,
+      "created": 1731879361262,
+      "url": "{{base_url}}/turmas-alunos",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731879364222,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_378fdb3b7b32489e87c00efada7d4a7d",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731879355271,
+      "created": 1731879355271,
+      "name": "turma-aluno",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731879355271,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_0929461d5368410c9101296d9c8a4226",
+      "parentId": null,
+      "modified": 1731869102807,
+      "created": 1731869102807,
+      "name": "matriculas-api",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_879a68235b8749959cde73eaf888ec1c",
+      "parentId": "fld_378fdb3b7b32489e87c00efada7d4a7d",
+      "modified": 1731933632321,
+      "created": 1731879368819,
+      "url": "{{base_url}}/turmas-alunos",
+      "name": "Post",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"ano\": \"2024\",\n\t\"semestre\": \"2\",\n\t\"disciplina\": \"codigo\",\n\t\"aluno\": 356,\n\t\"professor\": 123,\n\t\"situacao\": \"Matricula\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731879364122,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6fb93c372f234cbdbf6af72983d97273",
+      "parentId": "fld_378fdb3b7b32489e87c00efada7d4a7d",
+      "modified": 1731931192140,
+      "created": 1731931121527,
+      "url": "{{base_url}}/turmas-alunos",
+      "name": "Put",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"ano\": \"2024\",\n\t\"semestre\": \"2\",\n\t\"disciplina\": \"cad123\",\n\t\"aluno\": 34,\n\t\"professor\": 123,\n\t\"situacao\": \"Aprovado com nota\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731877631436.5,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_90d9dae61d0b4dc0889365d38dc0b711",
+      "parentId": "fld_378fdb3b7b32489e87c00efada7d4a7d",
+      "modified": 1731933691787,
+      "created": 1731933517115,
+      "url": "{{base_url}}/turmas-alunos",
+      "name": "Delete",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"ano\": \"2024\",\n\t\"semestre\": \"2\",\n\t\"disciplina\": \"codigo\",\n\t\"professor\": 234,\n\t\"aluno\": 356\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731876765093.75,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4893a0524831463ab657dad2e95a00e8",
+      "parentId": "fld_6a55c7943025431fa2aa5655778f7090",
+      "modified": 1731878147767,
+      "created": 1731875890874,
+      "url": "{{base_url}}/turmas",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731875898751,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_6a55c7943025431fa2aa5655778f7090",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731875869384,
+      "created": 1731875869384,
+      "name": "turma",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731875869384,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_8aa843b29b3340e1af1ec5ae24c25aa7",
+      "parentId": "fld_6a55c7943025431fa2aa5655778f7090",
+      "modified": 1731932843081,
+      "created": 1731875915145,
+      "url": "{{base_url}}/turmas",
+      "name": "Post",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"ano\": \"2024\",\n\t\"semestre\": \"1\",\n\t\"vagas\": 12,\n\t\"data_inicio\": \"2024-01-01\",\n\t\"data_fim\": \"2024-06-30\",\n\t\"disciplina\": \"codigo\",\n\t\"professor\": 123,\n\t\"Centro\": \"CT\",\n\t\"numero_Sala\": 124,\n\t\"dia_semana\": \"Seg\",\n\t\"horario_inicio\": \"8:30\",\n\t\"horario_fim\": \"10:30\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731875898651,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_11f24a93a55d493b88b4d199f87ff24b",
+      "parentId": "fld_6a55c7943025431fa2aa5655778f7090",
+      "modified": 1731930892912,
+      "created": 1731930726277,
+      "url": "{{base_url}}/turmas",
+      "name": "Put",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"ano\": \"2024\",\n\t\"semestre\": \"2\",\n\t\"vagas\": 12,\n\t\"data_inicio\": \"2024-07-01\",\n\t\"data_fim\": \"2024-12-31\",\n\t\"disciplina\": \"cad123\",\n\t\"professor\": 123,\n\t\"Centro\": \"CT\",\n\t\"numero_Sala\": 124,\n\t\"dia_semana\": \"Seg\",\n\t\"horario_inicio\": \"7:30\",\n\t\"horario_fim\": \"09:30\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731873841499.5,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_30b954ea946f4a25949c7146435c72c3",
+      "parentId": "fld_6a55c7943025431fa2aa5655778f7090",
+      "modified": 1731932899085,
+      "created": 1731932675665,
+      "url": "{{base_url}}/turmas",
+      "name": "Delete",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"ano\": \"2024\",\n\t\"semestre\": \"1\",\n\t\"disciplina\": \"codigo\",\n\t\"professor\": 123\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731872812923.75,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_897e80a0c46348b49a314bd4d03180dc",
+      "parentId": "fld_da45fa2951124136b832fa8c87b2c2c9",
+      "modified": 1731869303571,
+      "created": 1731869174518,
+      "url": "{{base_url}}/centros",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869173004,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_da45fa2951124136b832fa8c87b2c2c9",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731870118895,
+      "created": 1731869174518,
+      "name": "centro",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731869173606,
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "authentication": {},
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_39198f721cc145329e3095a378c6646b",
+      "parentId": "fld_da45fa2951124136b832fa8c87b2c2c9",
+      "modified": 1731869619707,
+      "created": 1731869174520,
+      "url": "{{base_url}}/centros",
+      "name": "Post",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"nome\": \"bruna\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869173003,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_dca2bec9f0e54073b5f31d7f6c41a728",
+      "parentId": "fld_da45fa2951124136b832fa8c87b2c2c9",
+      "modified": 1731879950779,
+      "created": 1731879889748,
+      "url": "{{base_url}}/centros",
+      "name": "Put",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"original\": \"bruna\",\n\t\"novo\": \"TESTEEE 1\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869173002,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_9d799f8bf29e4b3f9a46471e64f95c8e",
+      "parentId": "fld_da45fa2951124136b832fa8c87b2c2c9",
+      "modified": 1731931555902,
+      "created": 1731931368739,
+      "url": "{{base_url}}/centros",
+      "name": "Delete",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"nome\": \"CT\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869173001.5,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_5d1bae7272724ac7ad6688003eff327e",
+      "parentId": "fld_a6515ec36f074be7afce046929574800",
+      "modified": 1731869174521,
+      "created": 1731869174521,
+      "url": "{{base_url}}/cursos",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869173001,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_a6515ec36f074be7afce046929574800",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731870115270,
+      "created": 1731869174520,
+      "name": "cursos",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731869173506,
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "authentication": {},
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_90bde18eb0eb498fa8e2fec37dc3459c",
+      "parentId": "fld_a6515ec36f074be7afce046929574800",
+      "modified": 1731931648819,
+      "created": 1731869174522,
+      "url": "{{base_url}}/cursos",
+      "name": "Post",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"nome\": \"excluir esse\",\n\t\"campus\": \"SM\",\n\t\"ementa\": \"sei lai tmb\",\n\t\"centro\": \"CAL\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869173000,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_304b8e301374465bba2a09ac5e51559e",
+      "parentId": "fld_a6515ec36f074be7afce046929574800",
+      "modified": 1731880150626,
+      "created": 1731880055443,
+      "url": "{{base_url}}/cursos",
+      "name": "Put",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\t\"id\": 2,\n\t\t\"nome\": \"put\",\n\t\t\"campus\": \"SM\",\n\t\t\"ementa\": \"ementa bem trabalhada 1234\",\n\t\t\"centro\": \"CTISM\"\n\t}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172999,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f702bd70a66047fcb7e1477a2024334c",
+      "parentId": "fld_a6515ec36f074be7afce046929574800",
+      "modified": 1731931663684,
+      "created": 1731931606200,
+      "url": "{{base_url}}/cursos",
+      "name": "Delete",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": 3\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172998.5,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_28bd5620275a4817984ca6942da30199",
+      "parentId": "fld_84d3174991fc4e52a028480f229a9d03",
+      "modified": 1731870177585,
+      "created": 1731870140054,
+      "url": "{{base_url}}/alunos",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731870143077,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_84d3174991fc4e52a028480f229a9d03",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731870106924,
+      "created": 1731869174531,
+      "name": "alunos",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731869173306,
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "authentication": {},
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_d50ac31b27454fe7a0db82f76253743b",
+      "parentId": "fld_84d3174991fc4e52a028480f229a9d03",
+      "modified": 1731931766215,
+      "created": 1731870188374,
+      "url": "{{base_url}}/alunos",
+      "name": "Post",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"matricula\": 12,\n\t\"nome\": \"excluir\",\n\t\"curso\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731870142977,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4dac194300c54b74b5d5829f13e94715",
+      "parentId": "fld_84d3174991fc4e52a028480f229a9d03",
+      "modified": 1731880388761,
+      "created": 1731880200202,
+      "url": "{{base_url}}/alunos",
+      "name": "Put",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"matricula\": 34,\n\t\"nome\": \"bruna\",\n\t\"curso\": 2\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869657990.5,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_2188fd62ae1c43beb4e64f0951cb61dc",
+      "parentId": "fld_84d3174991fc4e52a028480f229a9d03",
+      "modified": 1731931795303,
+      "created": 1731931776794,
+      "url": "{{base_url}}/alunos",
+      "name": "Delete",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"matricula\": 34\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869415497.25,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_550b2772ee1b4530a3ad7b110ece7519",
+      "parentId": "fld_b166c3e86d894ccd831e6baf3a053227",
+      "modified": 1731869174523,
+      "created": 1731869174523,
+      "url": "{{base_url}}/disciplinas",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "id",
+          "value": "1",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172998,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_b166c3e86d894ccd831e6baf3a053227",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731869183460,
+      "created": 1731869174523,
+      "name": "disciplinas",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731869173056,
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "authentication": {},
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_9368f7f20ba94247ac31f72f4765f90e",
+      "parentId": "fld_b166c3e86d894ccd831e6baf3a053227",
+      "modified": 1731931916430,
+      "created": 1731869174524,
+      "url": "{{base_url}}/disciplinas",
+      "name": "Post",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"codigo\": \"bruna\",\n\t\"nome\": \"excluir\",\n\t\"semestre\": 1,\n\t\"ementa\": \"blablablabla\",\n\t\"carga_horaria\": \"60\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172997,
+      "isPrivate": false,
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_a1cb172898ec438cab784182bac8eafc",
+      "parentId": "fld_b166c3e86d894ccd831e6baf3a053227",
+      "modified": 1731930164807,
+      "created": 1731869174525,
+      "url": "{{base_url}}/disciplinas",
+      "name": "Put",
+      "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"codigo\": \"cad123\",\n\t\"nome\": \"disciplina\",\n\t\"semestre\": 1,\n\t\"ementa\": \"ementa de teste\",\n\t\"carga_horaria\": \"60\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "1",
+          "disabled": false
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172996,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful PUT request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201, 204]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0422fdea80df4a888e6766cb1bfd2894",
+      "parentId": "fld_b166c3e86d894ccd831e6baf3a053227",
+      "modified": 1731931956266,
+      "created": 1731869174525,
+      "url": "{{base_url}}/disciplinas",
+      "name": "Delete",
+      "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"codigo\": \"cad123\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "1",
+          "disabled": false
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172995,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful DELETE request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 202, 204]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_943add8e4cd245adbf26c42371e92c25",
+      "parentId": "fld_db88d9f1010743c6b705558554f5d3c0",
+      "modified": 1731874169988,
+      "created": 1731869174527,
+      "url": "{{base_url}}/salas",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172993,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_db88d9f1010743c6b705558554f5d3c0",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731869186226,
+      "created": 1731869174526,
+      "name": "salas",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731869173031,
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "authentication": {},
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_fffef939004344318d738c26dae6a316",
+      "parentId": "fld_db88d9f1010743c6b705558554f5d3c0",
+      "modified": 1731932511156,
+      "created": 1731869174527,
+      "url": "{{base_url}}/salas",
+      "name": "Post",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"centro\": \"CT\",\n\t\"numero\": 0,\n\t\"capacidade\": 12,\n\t\"tipo\": \"Sala\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172992,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_5a557cbbd94644c880dd9f30d37e4ee6",
+      "parentId": "fld_db88d9f1010743c6b705558554f5d3c0",
+      "modified": 1731930482598,
+      "created": 1731869174528,
+      "url": "{{base_url}}/salas",
+      "name": "Put",
+      "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"centro\": \"CT\",\n\t\"numero\": 124,\n\t\"capacidade\": 13,\n\t\"tipo\": \"Laboratório\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "1",
+          "disabled": false
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172991,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful PUT request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201, 204]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_eb5a186760f546688b1d1fbefa16b205",
+      "parentId": "fld_db88d9f1010743c6b705558554f5d3c0",
+      "modified": 1731932545304,
+      "created": 1731932497569,
+      "url": "{{base_url}}/salas",
+      "name": "Delete",
+      "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"centro\": \"CT\",\n\t\"numero\": 0\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "1",
+          "disabled": false
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731869172941,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful PUT request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201, 204]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_b31b92951ccf45cfb2d24dc6acf93915",
+      "parentId": "fld_3d4a34ffa38e422d98366dcaf9c3ade3",
+      "modified": 1731871798080,
+      "created": 1731871775091,
+      "url": "{{base_url}}/professores",
+      "name": "Get",
+      "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "id",
+          "value": "1",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731871784348,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Status code is 200\", function () {\n    insomnia.response.to.have.status(200);\n});",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_3d4a34ffa38e422d98366dcaf9c3ade3",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731869189403,
+      "created": 1731869174529,
+      "name": "professores",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1731869173018.5,
+      "preRequestScript": "",
+      "afterResponseScript": "",
+      "authentication": {},
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_9d441c3301e14810b7e8d2db8f6c0b4c",
+      "parentId": "fld_3d4a34ffa38e422d98366dcaf9c3ade3",
+      "modified": 1731932270716,
+      "created": 1731871788253,
+      "url": "{{base_url}}/professores",
+      "name": "Post",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"Matricula\": 12,\n\t\"nome\": \"Delete\",\n\t\"centro\": \"CT\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731871784248,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_598c0b946cdb4fb3a892d4fc6055dfd3",
+      "parentId": "fld_3d4a34ffa38e422d98366dcaf9c3ade3",
+      "modified": 1731930070006,
+      "created": 1731930039473,
+      "url": "{{base_url}}/professores",
+      "name": "Put",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"Matricula\": 123,\n\t\"nome\": \"Professor\",\n\t\"centro\": \"CT\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731870963662.5,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_930ae30c68d44aca84d6766d5baa049f",
+      "parentId": "fld_3d4a34ffa38e422d98366dcaf9c3ade3",
+      "modified": 1731932372928,
+      "created": 1731932250271,
+      "url": "{{base_url}}/professores",
+      "name": "Delete",
+      "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code.",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"matricula\": 12\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "preRequestScript": "",
+      "metaSortKey": -1731870553369.75,
+      "isPrivate": false,
+      "pathParameters": [],
+      "afterResponseScript": "insomnia.test(\"Successful POST request\", function () {\n    insomnia.expect(insomnia.response.code).to.be.oneOf([200, 201]);\n});\n",
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_98bad6bcd40bc5751e457b6a7ee27999b94bcdef",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731933692272,
+      "created": 1731869102809,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "localhost:3000"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1731869102809,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_98bad6bcd40bc5751e457b6a7ee27999b94bcdef",
+      "parentId": "wrk_0929461d5368410c9101296d9c8a4226",
+      "modified": 1731933692269,
+      "created": 1731869102810,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    }
+  ]
+}
