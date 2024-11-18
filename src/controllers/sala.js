@@ -79,6 +79,29 @@ class SalaController {
             }
         });
     }
+
+    delete(req, res) {
+        const {centro, numero} = req.body;
+
+        database('Sala').where('numero', numero).andWhere('centro', centro).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Sala não encontrada!');
+            } else {
+                database('Turma').where('numero_sala', numero).andWhere('centro_sala', centro).then((exist) => {
+                    if (exist.length > 0) {
+                        res.status(400).send('Sala está sendo utilizada em uma turma!');
+                    } else {
+                        database('Sala').where('numero', numero).andWhere('centro', centro).del().then(() => {
+                            res.send('Sala deletada com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao deletar sala!');
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = new SalaController();

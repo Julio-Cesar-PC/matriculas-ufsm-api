@@ -72,7 +72,6 @@ class TurmaAlunoController {
             situacao_aluno: situacao
         };
 
-        // PRIMARY KEY (ano_turma, semestre_turma, codigo_disciplina, Matricula_Aluno),
         database('Turma_Aluno').where('ano_turma', ano).where('semestre_turma', semestre).where('codigo_disciplina', disciplina).where('Matricula_Aluno', aluno).then((exist) => {
             if (exist.length === 0) {
                 res.status(400).send('Aluno não encontrado na turma!');
@@ -103,6 +102,25 @@ class TurmaAlunoController {
                 }).catch((err) => {
                     console.log(err);
                     res.status(400).send('Erro ao buscar turma!');
+                });
+            }
+        });
+    }
+
+    delete(req, res) {
+        const {ano, semestre, disciplina, aluno, professor} = req.body;
+
+        database('Turma_Aluno').where('ano_turma', ano).where('semestre_turma', semestre)
+            .where('codigo_disciplina', disciplina).where('Matricula_Aluno', aluno).where('Matricula_Professor', professor).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Aluno não encontrado na turma!');
+            } else {
+                database('Turma_Aluno').where('ano_turma', ano).where('semestre_turma', semestre)
+                    .where('codigo_disciplina', disciplina).where('Matricula_Aluno', aluno).where('Matricula_Professor', professor).del().then(() => {
+                    res.send('Aluno deletado da turma com sucesso!');
+                }).catch((err) => {
+                    console.log(err);
+                    res.send('Erro ao deletar aluno em uma turma!');
                 });
             }
         });

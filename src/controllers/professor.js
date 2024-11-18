@@ -70,6 +70,30 @@ class ProfessorController {
             }
         });
     }
+
+    delete(req, res) {
+        const {matricula} = req.body;
+
+
+        database('Professor').where('Matricula', matricula).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Professor não encontrado!');
+            } else {
+                database('Turma').where('Matricula_Professor', matricula).then((exist) => {
+                    if (exist.length !== 0) {
+                        res.status(400).send('Professor está vinculado a uma disciplina!');
+                    } else {
+                        database('Professor').where('Matricula', matricula).del().then(() => {
+                            res.send('Professor deletado com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao deletar professor!');
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = new ProfessorController();

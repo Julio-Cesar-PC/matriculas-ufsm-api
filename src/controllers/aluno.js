@@ -74,6 +74,30 @@ class AlunoController {
             }
         });
     }
+
+    delete(req, res) {
+        const {matricula} = req.body;
+
+
+        database('Aluno').where('matricula', matricula).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Aluno não encontrado!');
+            } else {
+                database('Turma_Aluno').where('Matricula_Aluno', matricula).then((exist) => {
+                    if (exist.length > 0) {
+                        res.status(400).send('Aluno está cadastrado em uma turma!');
+                    } else {
+                        database('Aluno').where('matricula', matricula).del().then(() => {
+                            res.send('Aluno deletado com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao deletar aluno!');
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = new AlunoController();

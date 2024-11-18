@@ -42,7 +42,7 @@ class DisciplinaController {
             carga_horaria: carga_horaria
         };
 
-        database('Disciplina').where('codigo_disciplina',codigo).then((exist) => {
+        database('Disciplina').where('codigo_disciplina', codigo).then((exist) => {
             if (exist.length === 0) {
                 res.status(400).send('Disciplina não encontrada!');
             } else {
@@ -51,6 +51,29 @@ class DisciplinaController {
                 }).catch((err) => {
                     console.log(err);
                     res.status(500).send('Erro ao atualizar disciplina!');
+                });
+            }
+        });
+    }
+
+    delete(req, res) {
+        const {codigo} = req.body;
+
+        database('Disciplina').where('codigo_disciplina', codigo).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Disciplina não encontrada!');
+            } else {
+                database('Turma').where('codigo_disciplina', codigo).then((exist) => {
+                    if (exist.length !== 0) {
+                        res.status(400).send('Disciplina está vinculada a uma turma!');
+                    } else {
+                        database('Disciplina').where('codigo_disciplina', codigo).del().then(() => {
+                            res.send('Disciplina deletada com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao deletar disciplina!');
+                        });
+                    }
                 });
             }
         });

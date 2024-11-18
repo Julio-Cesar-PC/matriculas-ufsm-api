@@ -158,6 +158,29 @@ class TurmaController {
             }
         });
     }
+
+    delete(req, res) {
+        const {ano, semestre, disciplina, professor} = req.body;
+
+        database('Turma').where('ano', ano).andWhere('semestre_turma', semestre).andWhere('codigo_disciplina', disciplina).andWhere('Matricula_Professor', professor).then((exist) => {
+            if (exist.length === 0) {
+                res.status(400).send('Turma não encontrada!');
+            } else {
+                database('Turma_Aluno').where('ano_turma', ano).andWhere('semestre_turma', semestre).andWhere('codigo_disciplina', disciplina).andWhere('Matricula_Professor', professor).then((exist) => {
+                    if (exist.length !== 0) {
+                        res.status(400).send('Turma está vinculada a um aluno!');
+                    } else {
+                        database('Turma').where('ano', ano).andWhere('semestre_turma', semestre).andWhere('codigo_disciplina', disciplina).andWhere('Matricula_Professor', professor).del().then(() => {
+                            res.send('Turma deletada com sucesso!');
+                        }).catch((err) => {
+                            console.log(err);
+                            res.status(500).send('Erro ao deletar turma!');
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
 
 module.exports = new TurmaController();
