@@ -5,20 +5,17 @@ const {checkExistence} = require("../utils/databaseUtil");
 class SalaController {
 
     get(req, res) {
-        database.select().from('Sala').then((data) => {
-            console.log(data);
-            let obj = data.map(item => ({
-                centro: item.centro,
-                numero: item.numero,
-                capacidade: item.capacidade_alunos,
-                tipo: item.tipo
-            }));
-
-            res.send(obj);
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).send('Erro ao buscar sala!');
-        });
+        database.select().from('Sala')
+            .then(data => {
+                const obj = data.map(({centro, numero, capacidade_alunos, tipo}) => ({
+                    centro, numero, capacidade: capacidade_alunos, tipo
+                }));
+                res.send(obj);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).send('Erro ao buscar sala!');
+            });
     }
 
     post(req, res) {
@@ -34,18 +31,20 @@ class SalaController {
             res.status(400).send('Centro não informado!');
         }
 
-        database.select().from('Centro').where('codigo_centro', centro).then((exist) => {
-            if (exist.length === 0) {
-                res.status(400).send('Centro não encontrado!');
-            } else {
-                database('Sala').insert(obj).then(() => {
-                    res.send('Sala cadastrado com sucesso!');
-                }).catch((err) => {
-                    console.log(err);
-                    res.status(500).send('Erro ao cadastrar sala!');
-                });
-            }
-        }).catch((err) => {
+        database.select().from('Centro').where('codigo_centro', centro)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Centro não encontrado!');
+                } else {
+                    database('Sala').insert(obj)
+                        .then(() => {
+                            res.send('Sala cadastrado com sucesso!');
+                        }).catch((err) => {
+                        console.log(err);
+                        res.status(500).send('Erro ao cadastrar sala!');
+                    });
+                }
+            }).catch((err) => {
             console.log(err);
             res.status(400).send('Centro não encontrado!');
         });
@@ -60,47 +59,53 @@ class SalaController {
             tipo: tipo
         };
 
-        database('Sala').where('numero', numero).andWhere('centro', centro).then((exist) => {
-            if (exist.length === 0) {
-                res.status(400).send('Sala não encontrada!');
-            } else {
-                database.select().from('Centro').where('codigo_centro', centro).then((exist) => {
-                    if (exist.length === 0) {
-                        res.status(400).send('Centro não encontrado!');
-                    } else {
-                        database('Sala').where('numero', numero).andWhere('centro', centro).update(obj).then(() => {
-                            res.send('Sala atualizado com sucesso!');
-                        }).catch((err) => {
-                            console.log(err);
-                            res.status(500).send('Erro ao atualizar sala!');
+        database('Sala').where('numero', numero).andWhere('centro', centro)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Sala não encontrada!');
+                } else {
+                    database.select().from('Centro').where('codigo_centro', centro)
+                        .then((exist) => {
+                            if (exist.length === 0) {
+                                res.status(400).send('Centro não encontrado!');
+                            } else {
+                                database('Sala').where('numero', numero).andWhere('centro', centro).update(obj)
+                                    .then(() => {
+                                        res.send('Sala atualizado com sucesso!');
+                                    }).catch((err) => {
+                                    console.log(err);
+                                    res.status(500).send('Erro ao atualizar sala!');
+                                });
+                            }
                         });
-                    }
-                });
-            }
-        });
+                }
+            });
     }
 
     delete(req, res) {
         const {centro, numero} = req.body;
 
-        database('Sala').where('numero', numero).andWhere('centro', centro).then((exist) => {
-            if (exist.length === 0) {
-                res.status(400).send('Sala não encontrada!');
-            } else {
-                database('Turma').where('numero_sala', numero).andWhere('centro_sala', centro).then((exist) => {
-                    if (exist.length > 0) {
-                        res.status(400).send('Sala está sendo utilizada em uma turma!');
-                    } else {
-                        database('Sala').where('numero', numero).andWhere('centro', centro).del().then(() => {
-                            res.send('Sala deletada com sucesso!');
-                        }).catch((err) => {
-                            console.log(err);
-                            res.status(500).send('Erro ao deletar sala!');
+        database('Sala').where('numero', numero).andWhere('centro', centro)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Sala não encontrada!');
+                } else {
+                    database('Turma').where('numero_sala', numero).andWhere('centro_sala', centro)
+                        .then((exist) => {
+                            if (exist.length > 0) {
+                                res.status(400).send('Sala está sendo utilizada em uma turma!');
+                            } else {
+                                database('Sala').where('numero', numero).andWhere('centro', centro).del()
+                                    .then(() => {
+                                        res.send('Sala deletada com sucesso!');
+                                    }).catch((err) => {
+                                    console.log(err);
+                                    res.status(500).send('Erro ao deletar sala!');
+                                });
+                            }
                         });
-                    }
-                });
-            }
-        });
+                }
+            });
     }
 }
 

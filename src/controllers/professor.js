@@ -5,39 +5,33 @@ const {checkExistence} = require("../utils/databaseUtil");
 class ProfessorController {
 
     get(req, res) {
-        database.select().from('Professor').then((data) => {
-            console.log(data);
-            res.send(data);
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).send('Erro ao buscar professores!');
-        });
+        database.select().from('Professor')
+            .then(data => res.send(data))
+            .catch(err => {
+                console.log(err);
+                res.status(500).send('Erro ao buscar professores!');
+            });
     }
 
     post(req, res) {
         const {Matricula, nome, centro} = req.body;
-        let obj = {
-            Matricula: Matricula,
-            nome: nome,
-            centro: centro
-        };
+        if (!centro) return res.status(400).send('Centro n��o informado!');
 
-        if (centro === undefined || centro === '') {
-            res.status(400).send('Centro não informado!');
-        }
+        const obj = {Matricula, nome, centro};
 
-        database.select().from('Centro').where('codigo_centro', centro).then((exist) => {
-            if (exist.length === 0) {
-                res.status(400).send('Centro não encontrado!');
-            } else {
-                database.insert(obj).into('Professor').then(() => {
-                    res.send('Professor cadastrado com sucesso!');
-                }).catch((err) => {
-                    console.log(err);
-                    res.status(500).send('Erro ao cadastrar professor!');
-                });
-            }
-        }).catch((err) => {
+        database.select().from('Centro').where('codigo_centro', centro)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Centro não encontrado!');
+                } else {
+                    database.insert(obj).into('Professor').then(() => {
+                        res.send('Professor cadastrado com sucesso!');
+                    }).catch((err) => {
+                        console.log(err);
+                        res.status(500).send('Erro ao cadastrar professor!');
+                    });
+                }
+            }).catch((err) => {
             console.log(err);
             res.status(400).send('Centro não encontrado!');
         });
@@ -45,54 +39,56 @@ class ProfessorController {
 
     put(req, res) {
         const {Matricula, nome, centro} = req.body;
-        let obj = {
-            Matricula: Matricula,
-            nome: nome,
-            centro: centro
-        };
+        const obj = {Matricula, nome, centro};
 
-        database('Professor').where('Matricula', Matricula).then((exist) => {
-            if (exist.length === 0) {
-                res.status(400).send('Professor não encontrado!');
-            } else {
-                database.select().from('Centro').where('codigo_centro', centro).then((exist) => {
-                    if (exist.length === 0) {
-                        res.status(400).send('Centro não encontrado!');
-                    } else {
-                        database('Professor').where('Matricula', Matricula).update(obj).then(() => {
-                            res.send('Professor atualizado com sucesso!');
-                        }).catch((err) => {
-                            console.log(err);
-                            res.status(500).send('Erro ao atualizar professor!');
+        database('Professor').where('Matricula', Matricula)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Professor não encontrado!');
+                } else {
+                    database.select().from('Centro').where('codigo_centro', centro)
+                        .then((exist) => {
+                            if (exist.length === 0) {
+                                res.status(400).send('Centro não encontrado!');
+                            } else {
+                                database('Professor').where('Matricula', Matricula).update(obj)
+                                    .then(() => {
+                                        res.send('Professor atualizado com sucesso!');
+                                    }).catch((err) => {
+                                    console.log(err);
+                                    res.status(500).send('Erro ao atualizar professor!');
+                                });
+                            }
                         });
-                    }
-                });
-            }
-        });
+                }
+            });
     }
 
     delete(req, res) {
         const {matricula} = req.body;
 
 
-        database('Professor').where('Matricula', matricula).then((exist) => {
-            if (exist.length === 0) {
-                res.status(400).send('Professor não encontrado!');
-            } else {
-                database('Turma').where('Matricula_Professor', matricula).then((exist) => {
-                    if (exist.length !== 0) {
-                        res.status(400).send('Professor está vinculado a uma disciplina!');
-                    } else {
-                        database('Professor').where('Matricula', matricula).del().then(() => {
-                            res.send('Professor deletado com sucesso!');
-                        }).catch((err) => {
-                            console.log(err);
-                            res.status(500).send('Erro ao deletar professor!');
+        database('Professor').where('Matricula', matricula)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Professor não encontrado!');
+                } else {
+                    database('Turma').where('Matricula_Professor', matricula)
+                        .then((exist) => {
+                            if (exist.length !== 0) {
+                                res.status(400).send('Professor está vinculado a uma disciplina!');
+                            } else {
+                                database('Professor').where('Matricula', matricula).del()
+                                    .then(() => {
+                                        res.send('Professor deletado com sucesso!');
+                                    }).catch((err) => {
+                                    console.log(err);
+                                    res.status(500).send('Erro ao deletar professor!');
+                                });
+                            }
                         });
-                    }
-                });
-            }
-        });
+                }
+            });
     }
 }
 
