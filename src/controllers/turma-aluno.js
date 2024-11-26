@@ -1,5 +1,4 @@
 const database = require('../database/connection');
-const TurmaAluno = require('../models/turma-aluno');
 
 class TurmaAlunoController {
 
@@ -8,11 +7,8 @@ class TurmaAlunoController {
             .then((data) => {
                 console.log(data);
                 let obj = data.map(item => ({
-                    ano: item.ano_turma,
-                    semestre: item.semestre_turma,
-                    disciplina: item.codigo_disciplina,
+                    turma: item.id_turma,
                     aluno: item.Matricula_Aluno,
-                    professor: item.Matricula_Professor,
                     situacao: item.situacao_aluno
                 }));
 
@@ -24,21 +20,16 @@ class TurmaAlunoController {
     }
 
     post(req, res) {
-        const {ano, semestre, disciplina, aluno, professor, situacao} = req.body;
+        const {turma, aluno, professor, situacao} = req.body;
         let obj = {
-            ano_turma: ano,
-            semestre_turma: semestre,
-            codigo_disciplina: disciplina,
+            id_turma: turma,
             Matricula_Aluno: aluno,
-            Matricula_Professor: professor,
             situacao_aluno: situacao
         };
 
-        database.select().from('Turma').where('ano', ano).where('semestre_turma', semestre)
-            .where('codigo_disciplina', disciplina).where('Matricula_Professor', professor)
+        database.select().from('Turma').where('id_turma', turma)
             .then((data) => {
                 if (data.length === 0) {
-
                     res.status(400).send('Turma não encontrada!');
                 } else {
                     database.select().from('Aluno').where('Matricula', aluno)
@@ -65,23 +56,19 @@ class TurmaAlunoController {
     }
 
     put(req, res) {
-        const {ano, semestre, disciplina, aluno, professor, situacao} = req.body;
+        const {turma, aluno, professor, situacao} = req.body;
         let obj = {
-            ano_turma: ano,
-            semestre_turma: semestre,
-            codigo_disciplina: disciplina,
+            turma: turma,
             Matricula_Aluno: aluno,
-            Matricula_Professor: professor,
             situacao_aluno: situacao
         };
 
-        database('Turma_Aluno').where('ano_turma', ano).where('semestre_turma', semestre).where('codigo_disciplina', disciplina).where('Matricula_Aluno', aluno)
+        database.select().from('Turma_Aluno').where('id_turma', turma).where('Matricula_Aluno', aluno)
             .then((exist) => {
                 if (exist.length === 0) {
                     res.status(400).send('Aluno não encontrado na turma!');
                 } else {
-                    database.select().from('Turma').where('ano', ano).where('semestre_turma', semestre)
-                        .where('codigo_disciplina', disciplina).where('Matricula_Professor', professor)
+                    database.select().from('Turma').where('id_turma', turma)
                         .then((data) => {
                             if (data.length === 0) {
                                 res.status(400).send('Turma não encontrada!');
@@ -117,8 +104,7 @@ class TurmaAlunoController {
     delete(req, res) {
         const {ano, semestre, disciplina, aluno, professor} = req.body;
 
-        database('Turma_Aluno').where('ano_turma', ano).where('semestre_turma', semestre)
-            .where('codigo_disciplina', disciplina).where('Matricula_Aluno', aluno).where('Matricula_Professor', professor)
+        database.select().from('Turma_Aluno').where('id_turma', turma).where('Matricula_Aluno', aluno)
             .then((exist) => {
                 if (exist.length === 0) {
                     res.status(400).send('Aluno não encontrado na turma!');

@@ -5,6 +5,7 @@ class TurmaController {
         database.select().from('Turma')
             .then(data => {
                 const obj = data.map(({
+                                          id_turma,
                                           ano,
                                           semestre_turma,
                                           N_vagas,
@@ -18,6 +19,7 @@ class TurmaController {
                                           hora_inicio,
                                           hora_fim
                                       }) => ({
+                    id: id_turma,
                     ano,
                     semestre: semestre_turma,
                     vagas: N_vagas,
@@ -41,6 +43,7 @@ class TurmaController {
 
     post(req, res) {
         const {
+            codigo,
             ano,
             semestre,
             vagas,
@@ -52,9 +55,11 @@ class TurmaController {
             numero_Sala,
             dia_semana,
             horario_inicio,
-            horario_fim
+            horario_fim,
+            curso
         } = req.body;
         let obj = {
+            id_turma: codigo,
             ano: ano,
             semestre_turma: semestre,
             N_vagas: vagas,
@@ -66,10 +71,10 @@ class TurmaController {
             Numero_Sala: numero_Sala,
             dia_semana: dia_semana,
             hora_inicio: horario_inicio,
-            hora_fim: horario_fim
+            hora_fim: horario_fim,
+            id_curso: curso
         };
 
-        console.log(disciplina);
         database.select().from('Disciplina').where('codigo_disciplina', disciplina)
             .then((data) => {
                 if (data.length === 0) {
@@ -110,6 +115,7 @@ class TurmaController {
 
     put(req, res) {
         const {
+            id,
             ano,
             semestre,
             vagas,
@@ -121,9 +127,11 @@ class TurmaController {
             numero_Sala,
             dia_semana,
             horario_inicio,
-            horario_fim
+            horario_fim,
+            curso
         } = req.body;
         let obj = {
+            id_turma: id,
             ano: ano,
             semestre_turma: semestre,
             N_vagas: vagas,
@@ -135,10 +143,11 @@ class TurmaController {
             Numero_Sala: numero_Sala,
             dia_semana: dia_semana,
             hora_inicio: horario_inicio,
-            hora_fim: horario_fim
+            hora_fim: horario_fim,
+            id_curso: curso
         };
 
-        database('Turma').where('ano', ano).andWhere('semestre_turma', semestre).andWhere('codigo_disciplina', disciplina).andWhere('Matricula_Professor', professor)
+        database('Turma').where('id_turma', id)
             .then((exist) => {
                 if (exist.length === 0) {
                     res.status(400).send('Turma não encontrada!');
@@ -200,6 +209,46 @@ class TurmaController {
                                     }).catch((err) => {
                                     console.log(err);
                                     res.status(500).send('Erro ao deletar turma!');
+                                });
+                            }
+                        });
+                }
+            });
+    }
+
+    // Puxar as turmas disponíveis das quais as disciplinas lecionadas sejam disciplinas em que aluno
+    // ainda não foi aprovado (Código disciplina, nome, carga horaria, horário começo e horário fim, professor)
+    getTurmasDisponiveis(req, res) {
+        const {matricula} = req.params;
+        database.select().from('Aluno').where('Matricula', matricula)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Aluno não encontrado!');
+                } else {
+                    database.select().from('Turma_Aluno').where('Matricula_Aluno', matricula)
+                        .then((exist) => {
+                            if (exist.length === 0) {
+                                res.status(400).send('Aluno não encontrado!');
+                            } else {
+                                database.select().from('Turma').innerJoin('Turma_Aluno', 'Turma.id_turma', 'Turma_Aluno.id_turma').where('Matricula_Aluno', matricula).whereNot('situacao_aluno', 'Aprovado')
+                                    .then((data) => {
+                                        const obj = data.map(({
+                                                                  codigo_disciplina,
+                                                                  Matricula_Professor,
+                                                                  dia_semana,
+                                                                  hora_inicio,
+                                                                  hora_fim
+                                                              }) => ({
+                                            disciplina: codigo_disciplina,
+                                            professor: Matricula_Professor,
+                                            dia: dia_semana,
+                                            hora_inicio,
+                                            hora_fim
+                                        }));
+                                        res.send(obj);
+                                    }).catch((err) => {
+                                    console.log(err);
+                                    res.status(500).send('Erro ao buscar turmas!');
                                 });
                             }
                         });

@@ -1,5 +1,6 @@
 Matricula aluno:
-- Puxar as turmas disponíveis das quais as disciplinas lecionadas sejam disciplinas em que aluno ainda não foi aprovado (Código disciplina, nome, carga horaria, horário começo e horário fim, professor)
+- Puxar as turmas disponíveis das quais as disciplinas lecionadas sejam disciplinas em que aluno
+ainda não foi aprovado (Código disciplina, nome, carga horaria, horário começo e horário fim, professor)
 - Puxar nome da disciplina + estado da solicitação (no banco está como "situacao_aluno" na tabela Turma_Aluno)
 - Popular "Turma_Aluno" com a Turma e status "Matricula Solicitada" para a matricula do aluno (caso a turma não tenha mais vagas, o status deve ser automaticamente "Matricula Rejeitada" (Pra isso a gente pode fazer um trigger que conta a qntd de matricula pra nao precisar fazer um " COUNT(*) FROM Turma_Aluno t where t.disciplina = x and where t.situacao_aluno like "Matricula S%"  " Pra toda vez que for ver se tá extrapolando o n de vagas.
 
