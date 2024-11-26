@@ -1,6 +1,4 @@
 const database = require('../database/connection');
-const Professor = require('../models/professor');
-const {checkExistence} = require("../utils/databaseUtil");
 
 class ProfessorController {
 
@@ -88,6 +86,16 @@ class ProfessorController {
                             }
                         });
                 }
+            });
+    }
+
+    getProfessoresCentro(req, res) {
+        const {centro} = req.params;
+        database.select().from('Professor').where('centro', centro)
+            .then(data => res.send(data))
+            .catch(err => {
+                console.log(err);
+                res.status(500).send('Erro ao buscar professores!');
             });
     }
 }

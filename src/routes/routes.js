@@ -33,6 +33,7 @@ router.get('/professores', ProfessorController.get);
 router.post('/professores', ProfessorController.post);
 router.put('/professores', ProfessorController.put);
 router.delete('/professores', ProfessorController.delete);
+router.get('/professores/centro/:centro', ProfessorController.getProfessoresCentro);
 
 router.get('/salas', SalaController.get);
 router.post('/salas', SalaController.post);
