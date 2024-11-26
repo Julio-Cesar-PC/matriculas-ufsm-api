@@ -27,7 +27,7 @@ router.delete('/alunos', AlunoController.delete);
 router.get('/disciplinas', DisciplinaController.get);
 router.post('/disciplinas', DisciplinaController.post);
 router.put('/disciplinas', DisciplinaController.put);
-router.delete('/disciplinas', DisciplinaController.delete);
+router.delete('/disciplinas/:codigo', DisciplinaController.delete);
 
 router.get('/professores', ProfessorController.get);
 router.post('/professores', ProfessorController.post);
