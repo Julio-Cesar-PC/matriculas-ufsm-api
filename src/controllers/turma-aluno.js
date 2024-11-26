@@ -120,6 +120,33 @@ class TurmaAlunoController {
                 }
             });
     }
+
+    // Puxar nome da disciplina + estado da solicitação
+    // (no banco está como "situacao_aluno" na tabela Turma_Aluno)
+    getTurmasAluno(req, res) {
+        const {matricula} = req.params;
+
+        database.select().from('Turma_Aluno').where('id_turma', turma).where('Matricula_Aluno', aluno)
+            .then((exist) => {
+                if (exist.length === 0) {
+                    res.status(400).send('Aluno não encontrado na turma!');
+                } else {
+                    database.select().from('Turma_Aluno').where('Matricula_Aluno', matricula).innerJoin('Turma', 'Turma.id_turma', 'Turma_Aluno.id_turma')
+                        .then((data) => {
+                            let obj = data.map(item => ({
+                                turma: item.id_turma,
+                                disciplina: item.codigo_disciplina,
+                                situacao: item.situacao_aluno
+                            }));
+
+                            res.send(obj);
+                        }).catch((err) => {
+                        console.log(err);
+                        res.send('Erro ao buscar turmas do aluno!');
+                    });
+                }
+            });
+    }
 }
 
 module.exports = new TurmaAlunoController();

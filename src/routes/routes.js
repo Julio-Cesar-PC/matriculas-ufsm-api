@@ -49,5 +49,6 @@ router.get('/turmas-alunos', TurmaAlunoController.get);
 router.post('/turmas-alunos', TurmaAlunoController.post);
 router.put('/turmas-alunos', TurmaAlunoController.put);
 router.delete('/turmas-alunos', TurmaAlunoController.delete);
+router.get('/turmas-alunos/situacao/:matricula', TurmaAlunoController.getTurmasAluno);
 
 module.exports = router;
