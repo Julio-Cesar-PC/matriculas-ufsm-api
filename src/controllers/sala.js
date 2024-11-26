@@ -107,6 +107,18 @@ class SalaController {
                 }
             });
     }
+
+    // puxar as salas livres usando a procedure "salas livres"
+    getSalasDisponiveis(req, res) {
+        const {centro, dia, inicio, fim} = req.body;
+
+        database.raw(`call SalasLivres('${centro}', '${dia}', '${inicio}', '${fim}')`).then(data => {
+            res.send(data[0][0]);
+        }).catch(err => {
+            console.log(err);
+            res.status(500).send('Erro ao buscar salas livres!');
+        });
+    }
 }
 
 module.exports = new SalaController();

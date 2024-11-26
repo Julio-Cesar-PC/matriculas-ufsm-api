@@ -39,6 +39,7 @@ router.get('/salas', SalaController.get);
 router.post('/salas', SalaController.post);
 router.put('/salas', SalaController.put);
 router.delete('/salas', SalaController.delete);
+router.post('/salas/disponiveis', SalaController.getSalasDisponiveis);
 
 router.get('/turmas', TurmaController.get);
 router.post('/turmas', TurmaController.post);
