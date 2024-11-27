@@ -48,3 +48,5 @@ build/
 *.ntvs*
 *.njsproj
 *.sln
+
+.database/connection.js

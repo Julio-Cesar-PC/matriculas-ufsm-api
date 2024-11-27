@@ -42,50 +42,52 @@ class TurmaController {
     }
 
     post(req, res) {
+        console.log('pinto: ', req.body)
         const {
-            codigo,
+            id_turma,
             ano,
-            semestre,
-            vagas,
+            semestre_turma,
+            N_vagas,
             data_inicio,
             data_fim,
-            disciplina,
-            professor,
+            codigo_disciplina,
+            Matricula_Professor,
             Centro,
-            numero_Sala,
+            Numero_Sala,
             dia_semana,
-            horario_inicio,
-            horario_fim,
-            curso
+            hora_inicio,
+            hora_fim,
+            id_curso
         } = req.body;
         let obj = {
-            id_turma: codigo,
+            id_turma: id_turma,
             ano: ano,
-            semestre_turma: semestre,
-            N_vagas: vagas,
+            semestre_turma: semestre_turma,
+            N_vagas: N_vagas,
             data_inicio: data_inicio,
             data_fim: data_fim,
-            codigo_disciplina: disciplina,
-            Matricula_Professor: professor,
+            codigo_disciplina: codigo_disciplina,
+            Matricula_Professor: Matricula_Professor,
             Centro_Sala: Centro,
-            Numero_Sala: numero_Sala,
+            Numero_Sala: Numero_Sala,
             dia_semana: dia_semana,
-            hora_inicio: horario_inicio,
-            hora_fim: horario_fim,
-            id_curso: curso
+            hora_inicio: hora_inicio,
+            hora_fim: hora_fim,
+            id_curso: id_curso
         };
+        console.log('murcho: ', obj)
 
-        database.select().from('Disciplina').where('codigo_disciplina', disciplina)
+        database.select().from('Disciplina').where('codigo_disciplina', codigo_disciplina)
             .then((data) => {
                 if (data.length === 0) {
                     res.status(400).send('Disciplina não encontrada!');
                 } else {
-                    database.select().from('Professor').where('Matricula', professor)
+                    database.select().from('Professor').where('Matricula', Matricula_Professor)
                         .then((data2) => {
                             if (data2.length === 0) {
                                 res.status(400).send('Professor não encontrado!');
                             } else {
-                                database.select().from('Sala').where('numero', numero_Sala).where('centro', Centro)
+                                database.select().from('Sala').where('numero', Numero_Sala).where('centro', Centro)
                                     .then((data3) => {
                                         if (data3.length === 0) {
                                             res.status(400).send('Sala não encontrada!');
