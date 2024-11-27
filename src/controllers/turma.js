@@ -220,43 +220,56 @@ class TurmaController {
 
     // Puxar as turmas disponíveis das quais as disciplinas lecionadas sejam disciplinas em que aluno
     // ainda não foi aprovado (Código disciplina, nome, carga horaria, horário começo e horário fim, professor)
-    getTurmasDisponiveis(req, res) {
-        const {matricula} = req.params;
-        database.select().from('Aluno').where('Matricula', matricula)
-            .then((exist) => {
-                if (exist.length === 0) {
-                    res.status(400).send('Aluno não encontrado!');
-                } else {
-                    database.select().from('Turma_Aluno').where('Matricula_Aluno', matricula)
-                        .then((exist) => {
-                            if (exist.length === 0) {
-                                res.status(400).send('Aluno não encontrado!');
-                            } else {
-                                database.select().from('Turma').innerJoin('Turma_Aluno', 'Turma.id_turma', 'Turma_Aluno.id_turma').where('Matricula_Aluno', matricula).whereNot('situacao_aluno', 'Aprovado')
-                                    .then((data) => {
-                                        const obj = data.map(({
-                                                                  codigo_disciplina,
-                                                                  Matricula_Professor,
-                                                                  dia_semana,
-                                                                  hora_inicio,
-                                                                  hora_fim
-                                                              }) => ({
-                                            disciplina: codigo_disciplina,
-                                            professor: Matricula_Professor,
-                                            dia: dia_semana,
-                                            hora_inicio,
-                                            hora_fim
-                                        }));
-                                        res.send(obj);
-                                    }).catch((err) => {
-                                    console.log(err);
-                                    res.status(500).send('Erro ao buscar turmas!');
-                                });
-                            }
-                        });
-                }
-            });
+    async getTurmasDisponiveis(req, res) {
+        const matriculaAluno = req.params.matricula;
+    
+        try {
+            // 1. Obter as disciplinas disponíveis para o aluno usando a procedure GetDisciplinasDisponiveis
+            const disciplinasDisponiveis = await database.raw('CALL GetDisciplinasDisponiveis(?)', [matriculaAluno]);
+    
+            // Se não houver disciplinas disponíveis, retornar erro
+            if (disciplinasDisponiveis[0].length === 0) {
+                return res.status(404).send('Nenhuma disciplina disponível para o aluno!');
+            }
+    
+            // 2. Extrair os códigos das disciplinas disponíveis para o aluno
+            const codigosDisciplinasDisponiveis = disciplinasDisponiveis[0][0].map(d => d.codigo_disciplina);
+    
+            // 3. Buscar as turmas disponíveis para as disciplinas encontradas
+            const turmasDisponiveis = await database('Turma as t')
+                .join('Disciplina as d', 't.codigo_disciplina', '=', 'd.codigo_disciplina')
+                .leftJoin('Turma_Aluno as ta', function() {
+                    this.on('ta.id_turma', '=', 't.id_turma')
+                        .andOn('ta.Matricula_Aluno', '=', database.raw('?', [matriculaAluno]));  // Verifica se o aluno já está matriculado
+                })
+                .whereIn('t.codigo_disciplina', codigosDisciplinasDisponiveis) // Só busca as turmas das disciplinas disponíveis
+                .andWhere('ta.id_turma', null) // Verifica que o aluno ainda não está matriculado nas turmas
+                .select(
+                    't.id_turma',
+                    't.codigo_disciplina',
+                    'd.nome as nome_disciplina',
+                    't.semestre_turma',
+                    't.hora_inicio',
+                    't.hora_fim',
+                    't.Matricula_Professor',
+                    't.Numero_Sala',
+                    't.dia_semana'
+                );
+    
+            // 4. Se não houver turmas disponíveis
+            if (turmasDisponiveis.length === 0) {
+                return res.status(404).send('Nenhuma turma disponível para o aluno!');
+            }
+    
+            // 5. Retornar as turmas disponíveis
+            return res.status(200).json(turmasDisponiveis);
+    
+        } catch (error) {
+            console.error('Erro ao buscar turmas disponíveis:', error);
+            return res.status(500).json({ error: 'Erro ao buscar turmas disponíveis.' });
+        }
     }
 }
+    
 
 module.exports = new TurmaController();
