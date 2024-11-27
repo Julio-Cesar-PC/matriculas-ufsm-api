@@ -68,4 +68,4 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 
-.database/connection.js
+database/connection.js
