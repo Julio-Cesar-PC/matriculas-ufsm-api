@@ -253,7 +253,8 @@ class TurmaController {
                     't.hora_fim',
                     't.Matricula_Professor',
                     't.Numero_Sala',
-                    't.dia_semana'
+                    't.dia_semana',
+                    'd.semestre_disciplina'
                 );
     
             // 4. Se não houver turmas disponíveis
