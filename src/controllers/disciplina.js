@@ -15,22 +15,29 @@ class DisciplinaController {
     }
 
     post(req, res) {
-        const {codigo, nome, semestre, ementa, carga_horaria, curso} = req.body;
-        let obj = {
-            codigo_disciplina: codigo,
-            nome: nome,
-            semestre_disciplina: semestre,
-            ementa: ementa,
-            carga_horaria: carga_horaria,
-            id_curso: curso
+        const { codigo_disciplina, nome, semestre_disciplina, ementa, carga_horaria, id_curso } = req.body;
+    
+        if (!codigo_disciplina || !nome || !semestre_disciplina || !carga_horaria || !id_curso) {
+            return res.status(400).send('Todos os campos obrigatórios devem ser preenchidos!');
+        }
+    
+        const obj = {
+            codigo_disciplina,
+            nome,
+            semestre_disciplina,
+            ementa,
+            carga_horaria,
+            id_curso
         };
-
-        database.insert(obj).into('Disciplina').then(() => {
-            res.send('Disciplina cadastrada com sucesso!');
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).send('Erro ao cadastrar disciplina!');
-        });
+    
+        database.insert(obj).into('Disciplina')
+            .then(() => {
+                res.send('Disciplina cadastrada com sucesso!');
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Erro ao cadastrar disciplina!');
+            });
     }
 
     put(req, res) {
@@ -59,7 +66,8 @@ class DisciplinaController {
     }
 
     delete(req, res) {
-        const {codigo} = req.body;
+        console.log('pionto: ', req.params)
+        const { codigo } = req.params;
 
         database('Disciplina').where('codigo_disciplina', codigo).then((exist) => {
             if (exist.length === 0) {

@@ -147,6 +147,47 @@ class TurmaAlunoController {
                 }
             });
     }
+
+    getGradeSemanal(req, res) {
+        const { matricula } = req.params;
+
+        // Definindo os dias da semana
+        const diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+        const diaAtual = diasSemana[new Date().getDay()]; // Dia da semana atual
+
+        database.select('Turma.codigo_disciplina', 'Turma.dia_semana', 'Turma.hora_inicio', 'Turma.hora_fim', 'Turma_Aluno.situacao_aluno')
+            .from('Turma_Aluno')
+            .innerJoin('Turma', 'Turma.id_turma', 'Turma_Aluno.id_turma') // Relaciona turmas ao aluno
+            .where('Turma_Aluno.Matricula_Aluno', matricula)
+            .andWhere('Turma.dia_semana', diaAtual) // Filtro pelo dia atual
+            .then((turmas) => {
+                if (turmas.length === 0) {
+                    res.send(`Nenhuma aula encontrada para hoje (${diaAtual}).`);
+                } else {
+                    const grade = turmas.map(({
+                        codigo_disciplina,
+                        dia_semana,
+                        hora_inicio,
+                        hora_fim,
+                        situacao_aluno
+                    }) => ({
+                        disciplina: codigo_disciplina,
+                        dia: dia_semana,
+                        hora_inicio,
+                        hora_fim,
+                        situacao: situacao_aluno
+                    }));
+
+                    res.send(grade);
+                }
+            }).catch((err) => {
+                console.log(err);
+                res.status(500).send('Erro ao buscar a grade semanal do aluno!');
+            });
+    }
+
+
+
 }
 
 module.exports = new TurmaAlunoController();
