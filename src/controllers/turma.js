@@ -261,6 +261,7 @@ class TurmaController {
                         .andOn('ta.Matricula_Aluno', '=', database.raw('?', [matriculaAluno]));
                 })
                 .leftJoin('Turma_Horarios as th', 't.id_turma', '=', 'th.id_turma')
+                .leftJoin('Professor as p', 't.Matricula_Professor', '=', 'p.Matricula')
                 .whereIn('t.codigo_disciplina', codigosDisciplinasDisponiveis)
                 .andWhere('ta.id_turma', null)
                 .groupBy('t.id_turma') // Agrupa por turma
@@ -271,6 +272,7 @@ class TurmaController {
                     't.semestre_turma',
                     't.Numero_Sala',
                     't.Matricula_Professor',
+                    'p.nome as nome_professor',
                     'd.semestre_disciplina',
                     'd.carga_horaria',
                     database.raw(`
@@ -298,6 +300,75 @@ class TurmaController {
     
             return res.status(200).json(turmasDisponiveis);
     
+        } catch (error) {
+            console.error('Erro ao buscar turmas disponíveis:', error);
+            return res.status(500).json({ error: 'Erro ao buscar turmas disponíveis.' });
+        }
+    }
+
+    async getTurmasDisponiveisPorProfessor(req, res) {
+        const matriculaAluno = req.params.matricula;
+        const matriculaProfessor = req.params.professor;
+
+        try {
+            // Consultando as disciplinas disponíveis para o aluno
+            const disciplinasDisponiveis = await database.raw('CALL GetDisciplinasDisponiveisProfessor(?, ?)', [matriculaAluno, matriculaProfessor]);
+            console.log(disciplinasDisponiveis);
+            if (disciplinasDisponiveis[0].length === 0) {
+                return res.status(404).send('Nenhuma disciplina disponível para o professor!');
+            }
+
+            const codigosDisciplinasDisponiveis = disciplinasDisponiveis[0][0].map(d => d.codigo_disciplina);
+
+            // Buscando as turmas disponíveis
+            const turmasDisponiveis = await database('Turma as t')
+                .join('Disciplina as d', 't.codigo_disciplina', '=', 'd.codigo_disciplina')
+                .leftJoin('Turma_Aluno as ta', function () {
+                    this.on('ta.id_turma', '=', 't.id_turma')
+                        .andOn('ta.Matricula_Aluno', '=', database.raw('?', [matriculaAluno]));
+                })
+                .leftJoin('Turma_Horarios as th', 't.id_turma', '=', 'th.id_turma')
+                .leftJoin('Professor as p', 't.Matricula_Professor', '=', 'p.Matricula')
+                .whereIn('t.codigo_disciplina', codigosDisciplinasDisponiveis)
+                .andWhere('ta.id_turma', null)
+                .groupBy('t.id_turma') // Agrupa por turma
+                .select(
+                    't.id_turma',
+                    't.codigo_disciplina',
+                    'd.nome as nome_disciplina',
+                    't.semestre_turma',
+                    't.Numero_Sala',
+                    't.Matricula_Professor',
+                    'p.nome as nome_professor',
+                    'd.semestre_disciplina',
+                    'd.carga_horaria',
+                    database.raw(`
+                        GROUP_CONCAT(
+                            CONCAT(th.dia_semana, '|', th.hora_inicio, '|', th.hora_fim)
+                            ORDER BY th.dia_semana, th.hora_inicio
+                            SEPARATOR ';'
+                        ) as horarios
+                    `)
+                );
+
+            if (turmasDisponiveis.length === 0) {
+                return res.status(404).send('Nenhuma turma disponível para o aluno!');
+            }
+
+            console.log(turmasDisponiveis);
+
+            // Transformando o campo `horarios` para um array de objetos
+            turmasDisponiveis.forEach(turma => {
+                turma.horarios = turma.horarios
+                    ? turma.horarios.split(';').map(horario => {
+                        const [dia_semana, hora_inicio, hora_fim] = horario.split('|');
+                        return { dia_semana, hora_inicio, hora_fim };
+                    })
+                    : [];
+            });
+
+            return res.status(200).json(turmasDisponiveis);
+
         } catch (error) {
             console.error('Erro ao buscar turmas disponíveis:', error);
             return res.status(500).json({ error: 'Erro ao buscar turmas disponíveis.' });
