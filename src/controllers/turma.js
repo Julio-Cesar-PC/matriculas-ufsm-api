@@ -287,8 +287,6 @@ class TurmaController {
             if (turmasDisponiveis.length === 0) {
                 return res.status(404).send('Nenhuma turma disponível para o aluno!');
             }
-
-            console.log(turmasDisponiveis);
     
             // Transformando o campo `horarios` para um array de objetos
             turmasDisponiveis.forEach(turma => {

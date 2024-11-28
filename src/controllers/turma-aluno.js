@@ -20,40 +20,61 @@ class TurmaAlunoController {
     }
 
     post(req, res) {
-        const {turma, aluno, professor, situacao} = req.body;
-        let obj = {
-            id_turma: turma,
-            Matricula_Aluno: aluno,
-            situacao_aluno: situacao
-        };
-
-        database.select().from('Turma').where('id_turma', turma)
-            .then((data) => {
-                if (data.length === 0) {
-                    res.status(400).send('Turma não encontrada!');
-                } else {
-                    database.select().from('Aluno').where('Matricula', aluno)
-                        .then((data2) => {
-                            if (data2.length === 0) {
-                                res.status(400).send('Aluno não encontrado!');
-                            } else {
-                                database('Turma_Aluno').insert(obj).then(() => {
-                                    res.send('Aluno cadastrado na turma com sucesso!');
-                                }).catch((err) => {
-                                    console.log(err);
-                                    res.send('Erro ao cadastrar aluno em uma turma!');
-                                });
-                            }
-                        }).catch((err) => {
-                        console.log(err);
-                        res.status(400).send('Erro ao buscar aluno!');
-                    });
-                }
-            }).catch((err) => {
-            console.log(err);
-            res.status(400).send('Erro ao buscar turma!');
+        const matriculas = req.body; // Array com múltiplos objetos
+    
+        // Para cada matrícula
+        matriculas.forEach(({ turma, aluno, situacao }) => {
+            let obj = {
+                id_turma: turma,
+                Matricula_Aluno: aluno,
+                situacao_aluno: situacao,
+            };
+    
+            // Verifique se a turma existe
+            database
+                .select()
+                .from("Turma")
+                .where("id_turma", turma)
+                .then((data) => {
+                    if (data.length === 0) {
+                        return res.status(400).send("Turma não encontrada!");
+                    } else {
+                        // Verifique se o aluno existe
+                        database
+                            .select()
+                            .from("Aluno")
+                            .where("Matricula", aluno)
+                            .then((data2) => {
+                                if (data2.length === 0) {
+                                    return res.status(400).send("Aluno não encontrado!");
+                                } else {
+                                    // Insira a matrícula na tabela Turma_Aluno
+                                    database("Turma_Aluno")
+                                        .insert(obj)
+                                        .then(() => {
+                                            console.log(`Aluno ${aluno} cadastrado na turma ${turma}`);
+                                        })
+                                        .catch((err) => {
+                                            console.log(err);
+                                            res.status(500).send("Erro ao cadastrar aluno em uma turma!");
+                                        });
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                res.status(400).send("Erro ao buscar aluno!");
+                            });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(400).send("Erro ao buscar turma!");
+                });
         });
+    
+        res.send("Matrículas processadas com sucesso!");
     }
+    
 
     put(req, res) {
         const {turma, aluno, professor, situacao} = req.body;
