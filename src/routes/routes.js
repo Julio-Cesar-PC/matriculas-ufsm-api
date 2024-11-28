@@ -46,6 +46,7 @@ router.post('/turmas', TurmaController.post);
 router.put('/turmas', TurmaController.put);
 router.delete('/turmas', TurmaController.delete);
 router.get('/turmas/disponiveis/:matricula', TurmaController.getTurmasDisponiveis);
+router.get('/turmas/disponiveis/:matricula/por-professor/:professor', TurmaController.getTurmasDisponiveisPorProfessor);
 
 router.get('/turmas-alunos', TurmaAlunoController.get);
 router.post('/turmas-alunos', TurmaAlunoController.post);
