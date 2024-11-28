@@ -41,8 +41,7 @@ class TurmaController {
             });
     }
 
-    post(req, res) {
-        console.log('pinto: ', req.body)
+    post(req, res) {        
         const {
             id_turma,
             ano,
@@ -54,12 +53,11 @@ class TurmaController {
             Matricula_Professor,
             Centro,
             Numero_Sala,
-            dia_semana,
-            hora_inicio,
-            hora_fim,
+            horarios,  // Espera-se um array de horários aqui
             id_curso
         } = req.body;
-        let obj = {
+    
+        let turmaObj = {
             id_turma: id_turma,
             ano: ano,
             semestre_turma: semestre_turma,
@@ -70,50 +68,72 @@ class TurmaController {
             Matricula_Professor: Matricula_Professor,
             Centro_Sala: Centro,
             Numero_Sala: Numero_Sala,
-            dia_semana: dia_semana,
-            hora_inicio: hora_inicio,
-            hora_fim: hora_fim,
             id_curso: id_curso
         };
-        console.log('murcho: ', obj)
-
+    
+        // Verificando a existência da disciplina
         database.select().from('Disciplina').where('codigo_disciplina', codigo_disciplina)
             .then((data) => {
                 if (data.length === 0) {
-                    res.status(400).send('Disciplina não encontrada!');
-                } else {
-                    database.select().from('Professor').where('Matricula', Matricula_Professor)
-                        .then((data2) => {
-                            if (data2.length === 0) {
-                                res.status(400).send('Professor não encontrado!');
-                            } else {
-                                database.select().from('Sala').where('numero', Numero_Sala).where('centro', Centro)
-                                    .then((data3) => {
-                                        if (data3.length === 0) {
-                                            res.status(400).send('Sala não encontrada!');
-                                        } else {
-                                            database('Turma').insert(obj).then(() => {
-                                                res.send('Turma cadastrada com sucesso!');
-                                            }).catch((err) => {
+                    return res.status(400).send('Disciplina não encontrada!');
+                }
+    
+                // Verificando a existência do professor
+                database.select().from('Professor').where('Matricula', Matricula_Professor)
+                    .then((data2) => {
+                        if (data2.length === 0) {
+                            return res.status(400).send('Professor não encontrado!');
+                        }
+    
+                        // Verificando a existência da sala
+                        database.select().from('Sala').where('numero', Numero_Sala).where('centro', Centro)
+                            .then((data3) => {
+                                if (data3.length === 0) {
+                                    return res.status(400).send('Sala não encontrada!');
+                                }
+    
+                                // Inserindo dados na tabela Turma
+                                database('Turma').insert(turmaObj)
+                                    .then(() => {
+                                        // Inserindo os horários na tabela Turma_Horarios
+                                        // Para cada horário no array 'horarios', inserimos na tabela 'Turma_Horarios'
+                                        const horariosObjArray = horarios.map(horario => ({
+                                            id_turma: id_turma,  // Associando o horário à turma
+                                            dia_semana: horario.dia_semana,
+                                            hora_inicio: horario.hora_inicio,
+                                            hora_fim: horario.hora_fim
+                                        }));
+    
+                                        database('Turma_Horarios').insert(horariosObjArray)
+                                            .then(() => {
+                                                res.send('Turma e horários cadastrados com sucesso!');
+                                            })
+                                            .catch((err) => {
                                                 console.log(err);
-                                                res.status(500).send('Erro ao cadastrar turma!');
+                                                res.status(500).send('Erro ao cadastrar horários!');
                                             });
-                                        }
-                                    }).catch((err) => {
-                                    console.log(err);
-                                    res.status(500).send('Erro ao buscar sala!');
-                                });
-                            }
-                        }).catch((err) => {
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                        res.status(500).send('Erro ao cadastrar turma!');
+                                    });
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                res.status(500).send('Erro ao buscar sala!');
+                            });
+                    })
+                    .catch((err) => {
                         console.log(err);
                         res.status(400).send('Erro ao buscar professor!');
                     });
-                }
-            }).catch((err) => {
-            console.log(err);
-            res.status(400).send('Erro ao buscar disciplina!');
-        });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(400).send('Erro ao buscar disciplina!');
+            });
     }
+    
 
     put(req, res) {
         const {
@@ -224,45 +244,60 @@ class TurmaController {
         const matriculaAluno = req.params.matricula;
     
         try {
-            // 1. Obter as disciplinas disponíveis para o aluno usando a procedure GetDisciplinasDisponiveis
+            // Consultando as disciplinas disponíveis para o aluno
             const disciplinasDisponiveis = await database.raw('CALL GetDisciplinasDisponiveis(?)', [matriculaAluno]);
     
-            // Se não houver disciplinas disponíveis, retornar erro
             if (disciplinasDisponiveis[0].length === 0) {
                 return res.status(404).send('Nenhuma disciplina disponível para o aluno!');
             }
     
-            // 2. Extrair os códigos das disciplinas disponíveis para o aluno
             const codigosDisciplinasDisponiveis = disciplinasDisponiveis[0][0].map(d => d.codigo_disciplina);
     
-            // 3. Buscar as turmas disponíveis para as disciplinas encontradas
+            // Buscando as turmas disponíveis
             const turmasDisponiveis = await database('Turma as t')
                 .join('Disciplina as d', 't.codigo_disciplina', '=', 'd.codigo_disciplina')
-                .leftJoin('Turma_Aluno as ta', function() {
+                .leftJoin('Turma_Aluno as ta', function () {
                     this.on('ta.id_turma', '=', 't.id_turma')
-                        .andOn('ta.Matricula_Aluno', '=', database.raw('?', [matriculaAluno]));  // Verifica se o aluno já está matriculado
+                        .andOn('ta.Matricula_Aluno', '=', database.raw('?', [matriculaAluno]));
                 })
-                .whereIn('t.codigo_disciplina', codigosDisciplinasDisponiveis) // Só busca as turmas das disciplinas disponíveis
-                .andWhere('ta.id_turma', null) // Verifica que o aluno ainda não está matriculado nas turmas
+                .leftJoin('Turma_Horarios as th', 't.id_turma', '=', 'th.id_turma')
+                .whereIn('t.codigo_disciplina', codigosDisciplinasDisponiveis)
+                .andWhere('ta.id_turma', null)
+                .groupBy('t.id_turma') // Agrupa por turma
                 .select(
                     't.id_turma',
                     't.codigo_disciplina',
                     'd.nome as nome_disciplina',
                     't.semestre_turma',
-                    't.hora_inicio',
-                    't.hora_fim',
-                    't.Matricula_Professor',
                     't.Numero_Sala',
-                    't.dia_semana',
-                    'd.semestre_disciplina'
+                    't.Matricula_Professor',
+                    'd.semestre_disciplina',
+                    'd.carga_horaria',
+                    database.raw(`
+                        GROUP_CONCAT(
+                            CONCAT(th.dia_semana, '|', th.hora_inicio, '|', th.hora_fim)
+                            ORDER BY th.dia_semana, th.hora_inicio
+                            SEPARATOR ';'
+                        ) as horarios
+                    `)
                 );
     
-            // 4. Se não houver turmas disponíveis
             if (turmasDisponiveis.length === 0) {
                 return res.status(404).send('Nenhuma turma disponível para o aluno!');
             }
+
+            console.log(turmasDisponiveis);
     
-            // 5. Retornar as turmas disponíveis
+            // Transformando o campo `horarios` para um array de objetos
+            turmasDisponiveis.forEach(turma => {
+                turma.horarios = turma.horarios
+                    ? turma.horarios.split(';').map(horario => {
+                        const [dia_semana, hora_inicio, hora_fim] = horario.split('|');
+                        return { dia_semana, hora_inicio, hora_fim };
+                    })
+                    : [];
+            });
+    
             return res.status(200).json(turmasDisponiveis);
     
         } catch (error) {

@@ -1,8 +1,8 @@
 let knex = require('knex')({
     client: 'mysql2', connection: {
         host: 'localhost',
-        user: 'feather',
-        password: 'strong_password',
+        user: 'root',
+        password: '0804',
         database: 'matriculas'
     }
 });
